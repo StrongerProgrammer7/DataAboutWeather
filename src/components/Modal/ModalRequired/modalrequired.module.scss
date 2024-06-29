@@ -1,0 +1,60 @@
+
+.modal
+{
+	width: 400px;
+}
+.modal__header
+{
+	display: none;
+}
+@media only screen and (max-width:768px) 
+{
+	.modal
+	{
+		width: auto;
+		margin:0 10px;
+	}	
+}
+
+.modal_title
+{
+	font-size: 24px;
+	text-align: center;
+	font-weight: bold;
+	margin:10px;
+}
+
+.btn_wrapper
+{
+	display: flex;
+	gap:20px;
+	justify-content: center;
+
+	& .btn
+	{
+		
+		color:white;
+		padding:10px 40px;
+		transition: all 0.3s linear;
+		&.btn_close
+		{
+			background: #6c6c6c;
+		}
+	
+		&.btn_save
+		{
+			background: #e00a0a;
+		}
+	
+		&:hover
+		{
+			transform:scale(1.1);
+		}
+		&:active
+		{
+			transform:scale(0.9);
+		}
+	}
+	
+}
+
