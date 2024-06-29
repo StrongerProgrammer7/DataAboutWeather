@@ -27,11 +27,11 @@ export default function TableWeatherData({ data }: { data: IWeather[]; })
 	const [choseRowForDelete,setChoseRowForDelete] = useState<IWeather | undefined>();
 	const toast = useRef<Toast>(null);
 
-	const editData = useCallback((data: IWeather,index?: number) =>
+	const editData = useCallback(async (data: IWeather,index?: number) =>
 	{
 		try 
 		{
-			const updatedData = updateData(dataWeather,data,index);
+			const updatedData = await updateData(dataWeather,data,index);
 			setDataWeather(updatedData);
 		}
 		catch (error) 
@@ -47,14 +47,14 @@ export default function TableWeatherData({ data }: { data: IWeather[]; })
 		editData(newData as IWeather,index);
 	};
 
-	const deleteRow = useCallback((id?: number) =>
+	const deleteRow = useCallback(async (id?: number) =>
 	{
 		if (!id)
 			return;
 
 		try
 		{
-			setDataWeather(deleteData(dataWeather,id));
+			setDataWeather(await deleteData(dataWeather,id));
 			showMessage(toast,'success','Delete data: ' + id);
 		}
 		catch (error)

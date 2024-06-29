@@ -20,7 +20,7 @@ export const showMessage = (toast: React.RefObject<Toast>,severity: 'success' | 
 	toast.current?.show({ severity: severity,summary: severity.toUpperCase(),detail: detail,life: 2000 });
 };
 
-export const updateData = (data: IWeather[],newData: IWeather,index?: number): IWeather[] =>
+export const updateData = async (data: IWeather[],newData: IWeather,index?: number): Promise<IWeather[]> =>
 {
 	const _data = [...data];
 	let curIndex = -1;
@@ -31,14 +31,14 @@ export const updateData = (data: IWeather[],newData: IWeather,index?: number): I
 	if (curIndex === -1)
 		return data;
 	_data[curIndex] = newData;
-	request('api/weather/' + newData.workerId,TypeMethodFetch.PUT,data);
+	await request('api/weather/' + newData.workerId,TypeMethodFetch.PUT,data);
 	return _data;
 };
 
-export const deleteData = (data: IWeather[],id: number) =>
+export const deleteData = async (data: IWeather[],id: number): Promise<IWeather[]> =>
 {
 	const temp = [...data].filter((elem) => elem.id !== id);
-	request(`api/weather/${id}`,TypeMethodFetch.DELETE);
+	await request(`api/weather/${id}`,TypeMethodFetch.DELETE);
 	return temp;
 };
 

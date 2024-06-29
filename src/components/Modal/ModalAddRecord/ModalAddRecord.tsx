@@ -37,20 +37,24 @@ const ModalAddRecord: FC<IModal> = ({ visible,setVisible,data,setData }) =>
 			workerId: state.worker.id
 		};
 
-		const result = await request<IWeather>('api/addWeather',TypeMethodFetch.POST,temp);
-		if (!result)
+		try
 		{
-			toast.current?.show({ severity: 'error',summary: 'Error',detail: 'Problem with send',life: 2000 });
-			return;
-		}
+			const result = await request<IWeather>('api/addWeather',TypeMethodFetch.POST,temp);
+			if (!result)
+				throw { message: "Problem with data" };
 
-		_data.push(result);
-		setData(_data);
-		toast.current?.show({ severity: 'success',summary: 'Success',detail: result.weather,life: 1000 });
-		setTimeout(() =>
+			_data.push(result);
+			setData(_data);
+			toast.current?.show({ severity: 'success',summary: 'Success',detail: result.weather,life: 1000 });
+			setTimeout(() =>
+			{
+				setVisible(false);
+			},800);
+		} catch (error)
 		{
-			setVisible(false);
-		},800);
+			console.log('error',error);
+			toast.current?.show({ severity: 'error',summary: 'Error',detail: 'Problem with send',life: 2000 });
+		}
 	};
 	const close = () => setVisible(false);
 
